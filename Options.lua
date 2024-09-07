@@ -129,7 +129,7 @@ BigWigsOptions.name = "FuBar - BigWigs"
 BigWigsOptions:RegisterDB("BigWigsFubarDB")
 
 BigWigsOptions.hasNoColor = true
-BigWigsOptions.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
+BigWigsOptions.hasIcon = "Interface\\AddOns\\BigWigs_NG\\Icons\\core-enabled"
 BigWigsOptions.defaultMinimapPosition = 180
 BigWigsOptions.clickableTooltip = true
 BigWigsOptions.hideWithoutStandby = true
