@@ -320,5 +320,5 @@ function BigWigsPulltimer:BigWigs_Pulltimer(duration, requester)
 	-- if not (timer.pulltimer < 10.2) then
 	-- 	-- self:DelayedSound(timer.pulltimer - 10, "Ten")
 	-- 	self:DelayedMessage(timer.pulltimer - 10, L["pull10_message"], "Attention", false, false, true)
-	end
+	-- end
 end
