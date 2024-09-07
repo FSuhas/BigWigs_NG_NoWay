@@ -301,24 +301,24 @@ function BigWigsPulltimer:BigWigs_Pulltimer(duration, requester)
 		-- self:DelayedSound(timer.pulltimer - 5, "Five")
 		self:DelayedMessage(timer.pulltimer - 5, L["pull5_message"], "Attention", false, false, true)
 	end
-	if not (timer.pulltimer < 6.2) then
-		-- self:DelayedSound(timer.pulltimer - 6, "Five")
-		self:DelayedMessage(timer.pulltimer - 6, L["pull6_message"], "Attention", false, false, true)
-	end
-	if not (timer.pulltimer < 7.2) then
-		-- self:DelayedSound(timer.pulltimer - 7, "Five")
-		self:DelayedMessage(timer.pulltimer - 7, L["pull7_message"], "Attention", false, false, true)
-	end
-	if not (timer.pulltimer < 8.2) then
-		-- self:DelayedSound(timer.pulltimer - 8, "Five")
-		self:DelayedMessage(timer.pulltimer - 8, L["pull8_message"], "Attention", false, false, true)
-	end
-	if not (timer.pulltimer < 9.2) then
-		-- self:DelayedSound(timer.pulltimer - 9, "Nine")
-		self:DelayedMessage(timer.pulltimer - 9, L["pull9_message"], "Attention", false, false, true)
-	end
-	if not (timer.pulltimer < 10.2) then
-		-- self:DelayedSound(timer.pulltimer - 10, "Ten")
-		self:DelayedMessage(timer.pulltimer - 10, L["pull10_message"], "Attention", false, false, true)
+	-- if not (timer.pulltimer < 6.2) then
+	-- 	-- self:DelayedSound(timer.pulltimer - 6, "Five")
+	-- 	self:DelayedMessage(timer.pulltimer - 6, L["pull6_message"], "Attention", false, false, true)
+	-- end
+	-- if not (timer.pulltimer < 7.2) then
+	-- 	-- self:DelayedSound(timer.pulltimer - 7, "Five")
+	-- 	self:DelayedMessage(timer.pulltimer - 7, L["pull7_message"], "Attention", false, false, true)
+	-- end
+	-- if not (timer.pulltimer < 8.2) then
+	-- 	-- self:DelayedSound(timer.pulltimer - 8, "Five")
+	-- 	self:DelayedMessage(timer.pulltimer - 8, L["pull8_message"], "Attention", false, false, true)
+	-- end
+	-- if not (timer.pulltimer < 9.2) then
+	-- 	-- self:DelayedSound(timer.pulltimer - 9, "Nine")
+	-- 	self:DelayedMessage(timer.pulltimer - 9, L["pull9_message"], "Attention", false, false, true)
+	-- end
+	-- if not (timer.pulltimer < 10.2) then
+	-- 	-- self:DelayedSound(timer.pulltimer - 10, "Ten")
+	-- 	self:DelayedMessage(timer.pulltimer - 10, L["pull10_message"], "Attention", false, false, true)
 	end
 end
