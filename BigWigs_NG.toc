@@ -83,6 +83,7 @@ Plugins\FRBuffMacro.lua
 Plugins\Farclip.lua
 Plugins\FrostBlast.lua
 Plugins\Pulltimer.lua
+Plugins\Pausetimer.lua
 Plugins\ScorchTimer.lua
 Plugins\RazuviousAssistant.lua
 Plugins\CombatAnnoucement.lua
