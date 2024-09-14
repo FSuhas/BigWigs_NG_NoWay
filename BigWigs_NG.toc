@@ -85,6 +85,7 @@ Plugins\FrostBlast.lua
 Plugins\Pulltimer.lua
 Plugins\ScorchTimer.lua
 Plugins\RazuviousAssistant.lua
+Plugins\CombatAnnoucement.lua
 
 Raids\ZG\Arlokk.lua
 Raids\ZG\Jeklik.lua
