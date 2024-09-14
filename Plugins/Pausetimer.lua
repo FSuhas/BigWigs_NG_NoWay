@@ -1,18 +1,5 @@
 assert( BigWigs, "BigWigs not found!")
 
---[[
-
-created by Vnm-Kronos (https://github.com/Vnm-Kronos)
-improved by Dorann (https://github.com/xorann)
-
-Allows you to start a pull timer.
-
-Usage:
-/pull 				starts a 6s pull timer
-/pull <duration>	starts a custom pull timer. "/pull 7" starts a 7s pull timer.
-
---]]
-
 
 -----------------------------------------------------------------------
 --      Are you local?
@@ -28,7 +15,7 @@ local syncName = {
 	stoppausetimer = "PausetimerStopSync",
 }
 local icon = {
-	pausetimer = "RACIAL_ORC_BERSERKERSTRENGTH",
+	pausetimer = "ability_ensnare",
 }
 
 -----------------------------------------------------------------------
@@ -40,13 +27,14 @@ L:RegisterTranslations("enUS", function() return {
 
 	["pausetimer"] = true,
 	["Options for Pause Timer"] = true,
-	pausestart_message = "Pause %d min. (Sent by %s)",
+	pausestart_message = "Pause %d sec. (Sent by %s)",
 	pausestop_message = "Pause aborted (Sent by %s)",
 	pause1_message = "Pause off in 1",
 	pause2_message = "Pause off  2",
 	pause3_message = "Pause off  3",
 	pause4_message = "Pause off  4",
 	pause5_message = "Pause off  5",
+	pause10_message = "Pause off  10",
 	pause0_message = "Pause off !",
 
 	["Pause"] = true,
@@ -62,13 +50,14 @@ L:RegisterTranslations("frFR", function() return {
 
 	--["pulltimer"] = true,
 	["Options for Pause Timer"] = "Options pour le timer de pause",
-	pausestart_message = "Pause de %d minutes (Envoyé par %s)",
+	pausestart_message = "Pause de %d secondes (Envoyé par %s)",
 	pausestop_message = "Pause annulée (Envoyé par %s)",
 	pause1_message = "Pause finie dans 1",
 	pause2_message = "Pause finie 2",
 	pause3_message = "Pause finie 3",
 	pause4_message = "Pause finie 4",
 	pause5_message = "Pause finie dans 5",
+	pause10_message = "Pause finie dans 10",
 	pause0_message = "Pause terminée!",
 
 	--["Pull"] = true,
@@ -185,7 +174,7 @@ function BigWigsPausetimer:BigWigs_RecvSync(sync, rest, nick)
 		self:BigWigs_Pausetimer(rest, nick)
 	end
 	if sync == syncName.stoppausetimer then
-		self:BigWigs_StopPausetimer()
+		self:BigWigs_StopPausetimer(rest, nick)
 
 		self:Message(string.format(L["pausestop_message"], nick), "Attention", false)
 		PlaySound("igQuestFailed")
@@ -213,15 +202,15 @@ function BigWigsPausetimer:BigWigs_PauseCommand(msg)
 				return
 				-- otherwise start a 1min pull timer
 			else
-				timer.pulltimer = 1
+				timer.pausetimer = 60
 			end
-		elseif ((timer.pulltimer > 63) or (timer.pulltimer < 1))  then
+		elseif ((timer.pausetimer > 600) or (timer.pausetimer < 1))  then
 			return
 		end
 
-		self:Sync("BWCustomBar "..timer.pulltimer.." ".."bwPauseTimer")	--[[This triggers a pull timer for older versions of bigwigs.
-		Modified CustomBar.lua RecvSync to ignore sync calls with "bwPullTimer" string in them.
-		--]]
+		-- self:Sync("BWCustomBar "..timer.pausetimer.." ".."Pause")	--[[This triggers a pull timer for older versions of bigwigs.
+		-- Modified CustomBar.lua RecvSync to ignore sync calls with "bwPullTimer" string in them.
+		-- ]]
 		self:Sync(syncName.pausetimer.." "..timer.pausetimer)
 	else
 		self:Print(L["You have to be the raid leader or an assistant"])
@@ -235,12 +224,15 @@ function BigWigsPausetimer:BigWigs_StopPausetimer()
 	self:CancelDelayedSound("Three")
 	self:CancelDelayedSound("Four")
 	self:CancelDelayedSound("Five")
+	self:CancelDelayedSound("Ten")
+	self:CancelDelayedSound("Coq")
 	self:CancelDelayedMessage(L["pause0_message"])
 	self:CancelDelayedMessage(L["pause1_message"])
 	self:CancelDelayedMessage(L["pause2_message"])
 	self:CancelDelayedMessage(L["pause3_message"])
 	self:CancelDelayedMessage(L["pause4_message"])
 	self:CancelDelayedMessage(L["pause5_message"])
+	self:CancelDelayedMessage(L["pause10_message"])
 end
 
 function BigWigsPausetimer:BigWigs_Pausetimer(duration, requester)
@@ -256,8 +248,10 @@ function BigWigsPausetimer:BigWigs_Pausetimer(duration, requester)
 	self:Message(string.format(L["pausestart_message"], timer.pausetimer, requester), "Attention", false, "RaidAlert")
 	self:Bar(L["Pause"], timer.pausetimer, icon.pausetimer)
 
-	--self:DelayedSound(timer.pulltimer, "Warning")
-	self:DelayedMessage(timer.pausetimer, L["pause0_message"], "Important", false, "Warning")
+	
+	self:DelayedSound(timer.pausetimer - 0, "Coq")
+	self:DelayedMessage(timer.pausetimer, L["pause0_message"], "Attention", false, false, true)
+
 	self:DelayedSound(timer.pausetimer - 1, "One")
 	self:DelayedMessage(timer.pausetimer - 1, L["pause1_message"], "Attention", false, false, true)
 	if not (timer.pausetimer < 2.2) then
@@ -275,5 +269,9 @@ function BigWigsPausetimer:BigWigs_Pausetimer(duration, requester)
 	if not (timer.pausetimer < 5.2) then
 		self:DelayedSound(timer.pausetimer - 5, "Five")
 		self:DelayedMessage(timer.pausetimer - 5, L["pause5_message"], "Attention", false, false, true)
+	end
+	if not (timer.pausetimer < 10.2) then
+		self:DelayedSound(timer.pausetimer - 10, "Ten")
+		self:DelayedMessage(timer.pausetimer - 10, L["pause10_message"], "Attention", false, false, true)
 	end
 end

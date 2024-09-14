@@ -18,7 +18,7 @@ local minFarclip = 177
 L:RegisterTranslations("enUS", function() return {
 	["Farclip"] = true,
 	["farclip"] = true,
-	["Reduces the terrain distance to the minimum in Naxxramas to avoid screen freezes."] = true,
+	["Reduces the terrain distance to the minimum in Naxxramas and Aq40 to avoid screen freezes."] = true,
 	["Active"] = true,
 	["Activate the plugin."] = true,
 	["Default Value"] = true,
@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("esES", function() return {
 	["Farclip"] = "Farclip",
 	["farclip"] = "farclip",
-	["Reduces the terrain distance to the minimum in Naxxramas to avoid screen freezes."] = "Reduce la distancia de terreno al mínimo en Naxxramas para evitar colgarse la pantalla.",
+	["Reduces the terrain distance to the minimum in Naxxramas, Aq40 to avoid screen freezes."] = "Reduce la distancia de terreno al mínimo en Naxxramas, Aq40  para evitar colgarse la pantalla.",
 	["Active"] = "Activo",
 	["Activate the plugin."] = "Activa el plugin",
 	["Default Value"] = "Valor Defecto",
@@ -38,7 +38,7 @@ L:RegisterTranslations("esES", function() return {
 L:RegisterTranslations("frFR", function() return {
 	["Farclip"] = "Farclip",
 	["farclip"] = "farclip",
-	["Reduces the terrain distance to the minimum in Naxxramas to avoid screen freezes."] = "Reduis la distance de terrain au minimum à Naxxramas pour eviter les freezes.",
+	["Reduces the terrain distance to the minimum in Naxxramas and Aq40 to avoid screen freezes."] = "Reduis la distance de terrain au minimum à Naxxramas et Aq40 pour eviter les freezes.",
 	["Active"] = "Activé",
 	["Activate the plugin."] = "Active le plugin",
 	["Default Value"] = "Valeur par Défaut",
@@ -64,7 +64,7 @@ BigWigsFarclip.consoleCmd = L["farclip"]
 BigWigsFarclip.consoleOptions = {
 	type = "group",
 	name = L["Farclip"],
-	desc = L["Reduces the terrain distance to the minimum in Naxxramas to avoid screen freezes."],
+	desc = L["Reduces the terrain distance to the minimum in Naxxramas and Aq40 to avoid screen freezes."],
 	args   = {
 		active = {
 			type = "toggle",
@@ -105,6 +105,16 @@ function BigWigsFarclip:ZONE_CHANGED_NEW_AREA()
 	if self.db.profile.active then
 		self:DebugMessage(2)
 		if AceLibrary("Babble-Zone-2.2")["Naxxramas"] == GetRealZoneText() then
+			--self.db.profile.defaultFarclip = GetCVar("farclip")
+			SetCVar("farclip", minFarclip) -- http://wowwiki.wikia.com/wiki/CVar_farclip
+		else
+			self:DebugMessage(3)
+			if tonumber(GetCVar("farclip")) == minFarclip then
+				self:DebugMessage(4)
+				SetCVar("farclip", self.db.profile.defaultFarclip)
+			end
+		end
+		if AceLibrary("Babble-Zone-2.2")["Temple of Ahn'Qiraj"] == GetRealZoneText() then
 			--self.db.profile.defaultFarclip = GetCVar("farclip")
 			SetCVar("farclip", minFarclip) -- http://wowwiki.wikia.com/wiki/CVar_farclip
 		else

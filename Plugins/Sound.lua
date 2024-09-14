@@ -33,6 +33,8 @@ local sounds = {
 	Pain = "Sound\\Creature\\Thaddius\\THAD_NAXX_ELECT.wav",
 	Shakira = "Interface\\AddOns\\BigWigs_NG\\Sounds\\Shakira.mp3",
 	Mario = "Interface\\AddOns\\BigWigs_NG\\Sounds\\mario.ogg",
+	Coq = "Interface\\AddOns\\BigWigs_NG\\Sounds\\Coq.ogg",
+
 }
 
 

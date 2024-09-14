@@ -234,8 +234,8 @@ function BigWigsPulltimer:BigWigs_PullCommand(msg)
 			return
 		end
 
-		self:Sync("BWCustomBar "..timer.pulltimer.." ".."Pull")	--[[This triggers a pull timer for older versions of bigwigs.
-		Modified CustomBar.lua RecvSync to ignore sync calls with "Pull" string in them.
+		-- self:Sync("BWCustomBar "..timer.pulltimer.." ".."Pull")	--[[This triggers a pull timer for older versions of bigwigs.
+		-- Modified CustomBar.lua RecvSync to ignore sync calls with "Pull" string in them.
 		--]]
 		self:Sync(syncName.pulltimer.." "..timer.pulltimer)
 	else
@@ -255,6 +255,7 @@ function BigWigsPulltimer:BigWigs_StopPulltimer()
 	self:CancelDelayedSound("Eight")
 	self:CancelDelayedSound("Nine")
 	self:CancelDelayedSound("Ten")
+	self:CancelDelayedSound("Mario")
 	self:CancelDelayedMessage(L["pull0_message"])
 	self:CancelDelayedMessage(L["pull1_message"])
 	self:CancelDelayedMessage(L["pull2_message"])
@@ -282,7 +283,7 @@ function BigWigsPulltimer:BigWigs_Pulltimer(duration, requester)
 	self:Bar(L["Pull"], timer.pulltimer, icon.pulltimer)
 
 	-- self:DelayedSound(timer.pulltimer - 0, "Alert")
-	self:DelayedMessage(timer.pulltimer, L["pull0_message"], "Important", false, "Warning")
+	self:DelayedMessage(timer.pulltimer, L["pull0_message"], "Attention", false, false, true)
 	-- self:DelayedSound(timer.pulltimer - 1, "One")
 	self:DelayedMessage(timer.pulltimer - 1, L["pull1_message"], "Attention", false, false, true)
 	if not (timer.pulltimer < 2.2) then
@@ -290,11 +291,11 @@ function BigWigsPulltimer:BigWigs_Pulltimer(duration, requester)
 		self:DelayedMessage(timer.pulltimer - 2, L["pull2_message"], "Attention", false, false, true)
 	end
 	if not (timer.pulltimer < 3.2) then
-		self:DelayedSound(timer.pulltimer - 3, "Mario")
+		-- self:DelayedSound(timer.pulltimer - 3, "Mario")
 		self:DelayedMessage(timer.pulltimer - 3, L["pull3_message"], "Attention", false, false, true)
 	end
 	if not (timer.pulltimer < 4.2) then
-		-- self:DelayedSound(timer.pulltimer - 4, "Mario")
+		self:DelayedSound(timer.pulltimer - 4, "Mario")
 		self:DelayedMessage(timer.pulltimer - 4, L["pull4_message"], "Attention", false, false, true)
 	end
 	if not (timer.pulltimer < 5.2) then

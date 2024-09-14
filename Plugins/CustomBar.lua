@@ -17,6 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Local"] = true,
 	["Global"] = true,
 	["<seconds> <bar text>"] = true,
+	["<minutes> <bar text>"] =  true,
 	["Starts a custom bar with the given parameters."] = true,
 	["%s: %s"] = true,
 	["%s: Timer [%s] finished."] = true,
@@ -95,6 +96,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Local"] = "Personnelle",
 	["Global"] = "Globale",
 	["<seconds> <bar text>"] = "<secondes> <texte de la barre>",
+	["<minutes> <bar text>"] =  "<minutes> <texte de la barre>",
 	["Starts a custom bar with the given parameters."] = "D\195\169marre une barre personnalis\195\169e avec les param\195\168tres indiqu\195\169s",
 	["%s: Timer [%s] finished."] = "%s: Compteur [%s] termin\195\169.",
 } end)
@@ -119,6 +121,7 @@ BigWigsCustomBar.consoleOptions = {
 			get = false,
 			set = function(v) BigWigsCustomBar:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..v) end,
 			usage = L["<seconds> <bar text>"],
+			usage = L["<minutes> <bar text>"],
 			disabled = function() return (not IsRaidLeader() and not IsRaidOfficer()) and UnitInRaid("player") end,
 		},
 		[L["Local"]] = {
@@ -128,6 +131,7 @@ BigWigsCustomBar.consoleOptions = {
 			get = false,
 			set = function(v) BigWigsCustomBar:StartBar(v, nil, true) end,
 			usage = L["<seconds> <bar text>"],
+			usage = L["<minutes> <bar text>"],
 		},
 	},
 }
@@ -184,6 +188,17 @@ function BigWigsCustomBar:StartBar(bar, nick, localOnly)
 	self:TriggerEvent("BigWigs_StartBar", self, string.format(L["%s: %s"], nick, barText), seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 end
 
+function BigWigsCustomBar:StopBar(bar, nick, localOnly)
+	local _, _, seconds, barText = string.find(bar, "(%d+) (.*)")
+	if not seconds or not barText then return end
+	seconds = tonumber(seconds)
+	if seconds == nil then return end
+
+	if not nick then nick = L["Local"] end
+	self:ScheduleEvent("bwcb"..nick..barText, "BigWigs_Message", seconds, string.format(L["%s: %s"], nick, barText), "Attention", localOnly)
+	self:TriggerEvent("BigWigs_StopBar", self, string.format(L["%s: %s"], nick, barText), seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+end
+
 -- For easy use in macros.
 function BWCB(seconds, message)
 	if message then seconds = tostring(seconds) .. " " .. message end
@@ -194,9 +209,23 @@ function BWCB(seconds, message)
 	end
 end
 
+function BWCB(minutes, message)
+	if message then minutes = tostring(minutes) .. " " .. message end
+	local t = GetTime()
+	if ( not times[minutes] ) or ( times[minutes] and ( times[minutes] + 2 ) < t) then
+		times[minutes] = t
+		BigWigsCustomBar:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..minutes)
+	end
+end
+
 function BWLCB(seconds, message)
 	if message then seconds = tostring(seconds) .. " " .. message end
 	BigWigsCustomBar:StartBar(seconds, nil, true)
+end
+
+function BWLCB(minutes, message)
+	if message then seconds = tostring(minutes) .. " " .. message end
+	BigWigsCustomBar:StartBar(minutes, nil, true)
 end
 
 -- Shorthand slashcommand
