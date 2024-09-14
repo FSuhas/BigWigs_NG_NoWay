@@ -5866,7 +5866,7 @@ BabbleSpell:RegisterTranslations("frFR", function()
 		["Command"] = "Commande",
 		["Commanding Shout"] = "Cri de commandement",
 		["Concentration Aura"] = "Aura de concentration",
-		["Concussion Blow"] = "Bourrasque",
+		["Concussion Blow"] = "Coup traumatisant",
 		["Concussion"] = "Commotion",
 		["Concussive Shot"] = "Trait de choc",
 		["Cone of Cold"] = "C\195\180ne de froid",
